@@ -1,0 +1,64 @@
+\documentclass[12pt, a4paper]{article}
+
+% It's nice to be able to write your own name
+\usepackage[T1]{fontenc}
+% Nice fonts for nice people
+\usepackage[sc, osf]{mathpazo}
+\usepackage[euler-digits]{eulervm}
+% Automatic clickable links
+\usepackage{hyperref}
+% SI-units
+\usepackage{siunitx}
+% Enhanced math formatting
+\usepackage{amsmath}
+% Extended math symbols
+\usepackage{amssymb}
+% Include proof environment
+\usepackage{amsthm}
+\usepackage{enumerate}
+% Include dod and dpd fracs
+\usepackage{commath}
+% Include font for the identity operator
+\usepackage{dsfont}
+
+
+\usepackage{color}
+\usepackage{pgfplots}
+\usepackage{xifthen}
+\usepackage{shellesc}
+\usepackage[numbers]{natbib}
+
+\usetikzlibrary{external}
+\tikzexternalize[prefix=figures/, mode=list and make]
+
+
+\pgfplotsset{compat=1.13}
+
+% Macro for latin-letter vectors
+\newcommand{\vf}{\mathbf}
+% Macro for greek-letter vectors
+\newcommand{\vfg}{\boldsymbol}
+% New command for the identity operator
+\newcommand{\1}{\mathds{1}}
+
+% Macros for writing auto-sized paranthesis, brackets and braces
+\newcommand{\para}[1]{\left(#1\right)}
+\newcommand{\brak}[1]{\left[#1\right]}
+\newcommand{\brac}[1]{\left\{#1\right\}}
+
+% Macro for expectation value
+\newcommand{\expv}[1]{\langle #1 \rangle}
+
+\begin{document}
+
+\title{FYS4460 - Introductory Molecular Dynamics Modelling}
+\author{Øyvind Sigmundson Schøyen}
+\date{\today}
+
+\maketitle
+
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
