@@ -3,3 +3,7 @@
 *.log
 *.aux
 *.toc
+
+# Lammps output
+log.lammps
+dump.*
