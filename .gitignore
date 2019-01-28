@@ -6,4 +6,4 @@
 
 # Lammps output
 log.lammps
-dump.*
+*.lammpstrj
