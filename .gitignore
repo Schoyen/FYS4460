@@ -7,3 +7,7 @@
 # Lammps output
 log.lammps
 *.lammpstrj
+
+# Python cahcne
+*.ipynb_checkpoints
+__pycache__
