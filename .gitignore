@@ -3,6 +3,15 @@
 *.log
 *.aux
 *.toc
+*.fls
+*.md5
+*.bbl
+*.blg
+*.fdb_latexmk
+*.makefile
+*.dep
+*.dpth
+article-figure*
 
 # Lammps output
 log.lammps
