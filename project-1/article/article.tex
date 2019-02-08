@@ -34,6 +34,8 @@
 
 \pgfplotsset{compat=1.13}
 
+\usepgfplotslibrary{statistics}
+
 % Macro for latin-letter vectors
 \newcommand{\vf}{\mathbf}
 % Macro for greek-letter vectors
@@ -58,6 +60,26 @@
 \maketitle
 
 \section{Velocity distribution}
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            ybar interval,
+            xtick=,% reset from ybar interval
+            xticklabel={
+                $[\pgfmathprintnumber\tick,
+                \pgfmathprintnumber\nexttick)$
+            },
+            %x tick label style={draw=red},
+        ]
+            % a data file containing 8000 normally distributed
+            % random numbers of mean 0 and variance 1
+            \addplot+ [hist={data=x}]
+                file {../dat/test.dat};
+        \end{axis}
+    \end{tikzpicture}
+\end{figure}
 
 \bibliographystyle{plainnat}
 \bibliography{references}
