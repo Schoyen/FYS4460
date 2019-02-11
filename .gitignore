@@ -12,6 +12,9 @@
 *.dep
 *.dpth
 article-figure*
+*.bcf
+*.figlist
+*.run.xml
 
 # Lammps output
 log.lammps
