@@ -1,6 +1,8 @@
-articledeps = article.tex $(wildcard, ../dat/*)
+FIGDIR := figures
+articledeps := article.tex $(wildcard, ../dat/*)
 
 all:
+	mkdir -p $(FIGDIR)
 	make build
 
 article.makefile: $(articledeps)
