@@ -26,15 +26,11 @@
 \usepackage{pgfplots}
 \usepackage{xifthen}
 \usepackage{shellesc}
-\usepackage[numbers]{natbib}
+\usepackage{biblatex}
 
 \usetikzlibrary{external}
 \tikzexternalize[prefix=figures/, mode=list and make]
 
-
-\pgfplotsset{compat=1.13}
-
-\usepgfplotslibrary{statistics}
 
 % Macro for latin-letter vectors
 \newcommand{\vf}{\mathbf}
@@ -65,23 +61,40 @@
     \centering
     \begin{tikzpicture}
         \begin{axis}[
-            ybar interval,
-            xtick=,% reset from ybar interval
-            xticklabel={
-                $[\pgfmathprintnumber\tick,
-                \pgfmathprintnumber\nexttick)$
-            },
-            %x tick label style={draw=red},
-        ]
-            % a data file containing 8000 normally distributed
-            % random numbers of mean 0 and variance 1
-            \addplot+ [hist={data=x}]
-                file {../dat/test.dat};
+                width=\textwidth,
+                ybar,
+                bar width=0.1cm,
+                xticklabel interval boundaries,
+                x tick label style={
+                    rotate=90,
+                },
+                xticklabel={[\pgfmathprintnumber\tick -- \pgfmathprintnumber\nexttick)},
+                xlabel=Velocity,
+                ylabel=Count,
+                xlabel style={yshift=-2cm},
+            ]
+            \addplot table [
+                x index=1,
+                y index=2,
+                col sep=space
+            ] {../dat/vel_x_test_0.hist};
+            \addplot table [
+                x index=1,
+                y index=2,
+                col sep=space
+            ] {../dat/vel_x_test_1000.hist};
+            \addplot table [
+                x index=1,
+                y index=2,
+                col sep=space
+            ] {../dat/vel_x_test_2000.hist};
+            \addplot table [
+                x index=1,
+                y index=2,
+                col sep=space
+            ] {../dat/vel_x_test_3000.hist};
         \end{axis}
     \end{tikzpicture}
 \end{figure}
-
-\bibliographystyle{plainnat}
-\bibliography{references}
 
 \end{document}
