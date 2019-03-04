@@ -23,8 +23,6 @@ def read_slice(dat_slice):
         names=headers,
     )
     df_slice["timestep"] = timestep
-    df_slice = df_slice.sort_values(["timestep", "id"]).reset_index()
-    del df_slice["index"]
 
     return df_slice, num_atoms, bounds
 
@@ -51,7 +49,11 @@ def read_dump(filename):
 
         prev_pos = current_pos
 
-    return pd.concat(df), num_atoms, bounds
+    df = pd.concat(df)
+    df = df.sort_values(["timestep", "id"]).reset_index()
+    del df["index"]
+
+    return df, num_atoms, bounds
 
 
 if __name__ == "__main__":
