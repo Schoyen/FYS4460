@@ -24,9 +24,7 @@ def compute_percolation_probability(L, p, num_samples):
     return num_percolating / num_samples
 
 
-def compute_percolation_threshold(x, L, num_samples):
-    p_bounds = (0, 1)
-
+def compute_percolation_threshold(x, L, num_samples, p_bounds=(0, 1)):
     def f(p):
         res = compute_percolation_probability(L, p, num_samples)
 
