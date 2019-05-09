@@ -14,7 +14,10 @@ def compute_percolation_probability(L, p, num_samples):
         props = skimage.measure.regionprops(labels)
 
         for prop in props:
-            if prop.bbox[2] - prop.bbox[0] == L or prop.bbox[3] - prop.bbox[1] == L:
+            if (
+                prop.bbox[2] - prop.bbox[0] == L
+                or prop.bbox[3] - prop.bbox[1] == L
+            ):
                 num_percolating += 1
                 break
 
