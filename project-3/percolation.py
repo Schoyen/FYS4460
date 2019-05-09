@@ -1,3 +1,4 @@
+import warnings
 import numpy as np
 import scipy.ndimage
 import scipy.optimize
@@ -24,15 +25,33 @@ def compute_percolation_probability(L, p, num_samples):
     return num_percolating / num_samples
 
 
-def compute_percolation_threshold(x, L, num_samples, p_bounds=(0, 1)):
-    def f(p):
-        res = compute_percolation_probability(L, p, num_samples)
+def compute_percolation_threshold(
+    x,
+    L,
+    num_samples,
+    p_bounds=(0, 1),
+    tol=1e-5,
+    max_iterations=100,
+    verbose=False,
+):
+    lower, upper = p_bounds
+    lower_pi, upper_pi = (0, 1)
 
-        return np.abs(res - x)
+    for i in range(max_iterations):
+        if upper - lower < tol:
+            break
 
-    options = dict(disp=3, maxiter=50)
-    opt = scipy.optimize.minimize_scalar(
-        f, bounds=p_bounds, method="bounded", options=options
-    )
+        mid = (upper + lower) / 2
+        mid_pi = compute_percolation_probability(L, mid, num_samples)
 
-    return opt.x
+        if mid_pi > x:
+            upper = mid
+            upper_pi = mid_pi
+        else:
+            lower = mid
+            lower_pi = mid_pi
+
+    if verbose and i == max_iterations - 1:
+        warnings.warn("Minimization did not converge")
+
+    return mid
