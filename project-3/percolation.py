@@ -32,6 +32,9 @@ def compute_percolation_threshold(x, L, num_samples):
 
         return np.abs(res - x)
 
-    opt = scipy.optimize.minimize_scalar(f, bounds=p_bounds, method="bounded")
+    options = dict(disp=3, maxiter=50)
+    opt = scipy.optimize.minimize_scalar(
+        f, bounds=p_bounds, method="bounded", options=options
+    )
 
     return opt.x
