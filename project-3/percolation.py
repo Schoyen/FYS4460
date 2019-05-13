@@ -15,10 +15,7 @@ def compute_percolation_probability(L, p, num_samples):
         props = skimage.measure.regionprops(labels)
 
         for prop in props:
-            if (
-                prop.bbox[2] - prop.bbox[0] == L
-                or prop.bbox[3] - prop.bbox[1] == L
-            ):
+            if prop.bbox[2] - prop.bbox[0] == L or prop.bbox[3] - prop.bbox[1] == L:
                 num_percolating += 1
                 break
 
@@ -26,13 +23,7 @@ def compute_percolation_probability(L, p, num_samples):
 
 
 def compute_percolation_threshold(
-    x,
-    L,
-    num_samples,
-    p_bounds=(0, 1),
-    tol=1e-5,
-    max_iterations=100,
-    verbose=False,
+    x, L, num_samples, p_bounds=(0, 1), tol=1e-5, max_iterations=100, verbose=False
 ):
     lower, upper = p_bounds
     lower_pi, upper_pi = (0, 1)
