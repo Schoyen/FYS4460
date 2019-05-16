@@ -68,7 +68,7 @@ def percwalk(spanning_cluster, num_walks):
         iix = ix + dr[0]
         iiy = iy + dr[1]
 
-        if 0 < iix < n and 0 < iiy < m and spanning_cluster[iix, iiy]:
+        if 0 <= iix < n and 0 <= iiy < m and spanning_cluster[iix, iiy]:
             neighbor_arr[neighbor] = direction
             neighbor += 1
 
