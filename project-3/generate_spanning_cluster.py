@@ -3,7 +3,7 @@ import scipy.ndimage
 import skimage
 
 
-def get_spanning_cluster(L, p, num_attempts=1000):
+def get_spanning_cluster(L, p, num_attempts=1000, verbose=False):
     assert 0 <= p <= 1
 
     if not type(L) in [list, tuple, set]:
@@ -18,7 +18,9 @@ def get_spanning_cluster(L, p, num_attempts=1000):
         perc_labels = perc_labels[perc_labels > 0]
 
         if len(perc_labels) > 0:
-            print("Percolating cluster found")
+            if verbose:
+                print("Percolating cluster found")
+
             break
 
     return labels == perc_labels[0]
