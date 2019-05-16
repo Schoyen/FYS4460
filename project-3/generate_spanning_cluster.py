@@ -21,4 +21,4 @@ def get_spanning_cluster(L, p, num_attempts=1000):
             print("Percolating cluster found")
             break
 
-    return perc_labels, labels, num_labels, z
+    return labels == perc_labels[0]
