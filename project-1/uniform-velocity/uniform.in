@@ -1,6 +1,7 @@
 # 3d Lennard-Jones gas
 units lj
 dimension 3
+# Periodic boundiaries
 boundary p p p
 atom_style atomic
 
