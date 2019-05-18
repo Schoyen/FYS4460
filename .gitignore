@@ -19,7 +19,11 @@ article-figure*
 # Lammps output
 log.lammps
 *.lammpstrj
+*.lammps
 
 # Python cahcne
 *.ipynb_checkpoints
 __pycache__
+
+# Vim output
+*.swp
