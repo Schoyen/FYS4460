@@ -1,0 +1,33 @@
+
+# 3d Lennard-Jones gas
+units lj
+dimension 3
+# Periodic boundiaries
+boundary p p p
+atom_style atomic
+
+variable sigma equal 3.405
+variable b equal 5.72
+variable reduced_density equal 4/((${b}/${sigma})^3)
+
+lattice fcc ${reduced_density}
+region simbox block 0 10 0 10 0 10
+create_box 1 simbox
+create_atoms 1 box
+
+mass 1 1.0
+variable T equal 0.1
+velocity all create ${T} 87287 dist uniform
+
+variable cut equal 3.0
+pair_style lj/cut ${cut}
+pair_coeff 1 1 1.0 1.0
+
+variable bins equal 50
+compute myRDF all rdf ${bins}
+fix 1 all ave/time 100 1 100 c_myRDF[*] file dat/rdf.log mode vector
+fix 2 all nvt temp ${T} ${T} 1.0
+
+#dump 1 all custom 10 ${dump_name} id type x y z vx vy vz
+thermo 100
+run 5000
