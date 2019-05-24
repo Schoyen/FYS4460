@@ -27,3 +27,7 @@ __pycache__
 
 # Vim output
 *.swp
+
+# Moltemplate output
+output_ttree
+*.data
