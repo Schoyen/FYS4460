@@ -8,7 +8,7 @@ def get_diffusion_constant(
     if transition_time is None:
         transition_time = len(log_df) // 2
 
-    linear_df = log_df[log_df[time_col] > transition_time]
+    linear_df = log_df.iloc[transition_time:]
     time = np.array(linear_df[time_col])
     msd = np.array(linear_df[msd_col])
 
