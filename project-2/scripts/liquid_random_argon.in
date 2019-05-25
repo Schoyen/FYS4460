@@ -1,0 +1,195 @@
+
+# 3d Lennard-Jones gas
+units lj
+dimension 3
+# Periodic boundiaries
+boundary p p p
+atom_style atomic
+
+variable seed equal 87287
+variable sigma equal 3.405
+variable b equal 5.72
+variable reduced_density equal 4/((${b}/${sigma})^3)
+variable temperature equal 0.851
+variable box_len equal 30
+variable radius_min equal 20/${sigma}
+variable radius_max equal 30/${sigma}
+
+# Set fcc lattice with specified density
+lattice fcc ${reduced_density}
+region simbox block 0 ${box_len} 0 ${box_len} 0 ${box_len}
+create_box 2 simbox
+create_atoms 1 box
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 1 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 2 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 3 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 4 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 5 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 6 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 7 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 8 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 9 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 10 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 11 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 12 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 13 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 14 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 15 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 16 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 17 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 18 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 19 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+variable x_1 equal random(0,${box_len},${seed})
+variable y_1 equal random(0,${box_len},${seed})
+variable z_1 equal random(0,${box_len},${seed})
+variable radius_1 equal random(${radius_min},${radius_max},${seed})
+region 20 sphere ${x_1} ${y_1} ${z_1} ${radius_1}
+
+mass * 1.0
+velocity all create ${temperature} ${seed}
+
+pair_style lj/cut 3.0
+pair_coeff * * 1.0 1.0
+
+fix 1 all nvt temp ${temperature} ${temperature} 0.5
+#fix 1 all nve
+
+thermo 100
+# Thermalize for 3000 steps
+run 300
+
+# Group all atoms in the cylinder
+group pore_1 region 1
+group pore_2 region 2
+group pore_3 region 3
+group pore_4 region 4
+group pore_5 region 5
+group pore_6 region 6
+group pore_7 region 7
+group pore_8 region 8
+group pore_9 region 9
+group pore_10 region 10
+group pore_11 region 11
+group pore_12 region 12
+group pore_13 region 13
+group pore_14 region 14
+group pore_15 region 15
+group pore_16 region 16
+group pore_17 region 17
+group pore_18 region 18
+group pore_19 region 19
+group pore_20 region 20
+
+group pore_group union pore_1 pore_2 pore_3 pore_4 pore_5 pore_6 pore_7 pore_8 &
+    pore_9 pore_10 pore_11 pore_12 pore_13 pore_14 pore_15 pore_16 pore_17 pore_18 &
+    pore_19 pore_20
+set group pore_group type 2
+# Create another group from all the remaining atoms except for the ones in the cylinder
+group frozen subtract all pore_group
+# Set the velocity of the atoms outside the cylinder to zero
+velocity frozen set 0 0 0
+# Avoid integrating all the particles
+unfix 1
+
+# Run cylinder using nve
+fix 1 pore_group nve
+
+dump 1 all custom 10 dat/liquid_random_argon.lammpstrj id type x y z vx vy vz
+
+run 1000

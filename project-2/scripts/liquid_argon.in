@@ -1,3 +1,4 @@
+
 # 3d Lennard-Jones gas
 units lj
 dimension 3
@@ -15,7 +16,6 @@ lattice fcc ${reduced_density}
 region simbox block 0 20 0 20 0 20
 create_box 2 simbox
 create_atoms 1 box
-create_atoms 2 single -1 -1 -1
 
 # Use a radius of 2 nm (equal to 20 Å)
 variable radius equal 20/${sigma}
@@ -23,19 +23,15 @@ variable centre_y equal ly/2
 variable centre_z equal lz/2
 region cylinder cylinder x ${centre_y} ${centre_z} ${radius} EDGE EDGE units box
 
-mass 1 1.0
-mass 2 1.0
+mass * 1.0
 velocity all create ${temperature} 87287
 
 pair_style lj/cut 3.0
-pair_coeff 1 1 1.0 1.0
-pair_coeff 2 2 1.0 1.0
-pair_coeff 1 2 1.0 1.0
+pair_coeff * * 1.0 1.0
 
 fix 1 all nvt temp ${temperature} ${temperature} 0.5
 #fix 1 all nve
 
-dump 1 all custom 10 dat/liquid_argon.lammpstrj id type x y z vx vy vz
 thermo 100
 # Thermalize for 3000 steps
 run 300
@@ -47,9 +43,12 @@ set group cylinder_group type 2
 group frozen subtract all cylinder_group
 # Set the velocity of the atoms outside the cylinder to zero
 velocity frozen set 0 0 0
-# Delete the "1" group
+# Avoid integrating all the particles
 unfix 1
 
 # Run cylinder using nve
 fix 1 cylinder_group nve
+
+dump 1 all custom 10 dat/liquid_argon.lammpstrj id type x y z vx vy vz
+
 run 5000
