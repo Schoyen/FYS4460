@@ -1,0 +1,27 @@
+
+include "spce-water-system.in"
+
+variable bins equal 200
+
+timestep 1.0
+fix   fxnpt all npt temp ${T} ${T} 100.0 iso 1.0 1.0 1000.0 drag 1.0
+#dump  1 all custom 10 dat/water_${T}.lammpstrj id mol type x y z ix iy iz
+
+thermo 10
+run 2000
+
+reset_timestep 0
+# Add com to remove drift in the system. Water is running all over the place.
+compute msd all msd com yes
+compute myrdf all rdf ${bins}
+
+variable time equal dt*step
+
+fix 2 all ave/time 100 1 100 c_myrdf[*] file dat/water_rdf_${T}.log mode vector
+
+thermo_style custom step v_time temp ke pe etotal press c_msd[4]
+log dat/water_g_${T}.log
+
+
+thermo 10
+run   5000
