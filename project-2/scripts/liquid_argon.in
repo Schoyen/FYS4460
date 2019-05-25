@@ -13,8 +13,9 @@ variable temperature equal 0.851
 # Set fcc lattice with specified density
 lattice fcc ${reduced_density}
 region simbox block 0 20 0 20 0 20
-create_box 1 simbox
+create_box 2 simbox
 create_atoms 1 box
+create_atoms 2 single -1 -1 -1
 
 # Use a radius of 2 nm (equal to 20 Å)
 variable radius equal 20/${sigma}
@@ -23,28 +24,32 @@ variable centre_z equal lz/2
 region cylinder cylinder x ${centre_y} ${centre_z} ${radius} EDGE EDGE units box
 
 mass 1 1.0
+mass 2 1.0
 velocity all create ${temperature} 87287
 
 pair_style lj/cut 3.0
-pair_coeff 1 1 1.0 1.0 3.0
+pair_coeff 1 1 1.0 1.0
+pair_coeff 2 2 1.0 1.0
+pair_coeff 1 2 1.0 1.0
 
 fix 1 all nvt temp ${temperature} ${temperature} 0.5
 #fix 1 all nve
 
-dump 1 all custom 10 liquid_argon.lammpstrj id type x y z vx vy vz
+dump 1 all custom 10 dat/liquid_argon.lammpstrj id type x y z vx vy vz
 thermo 100
 # Thermalize for 3000 steps
 run 300
 
 # Group all atoms in the cylinder
-group cylinder region cylinder
+group cylinder_group region cylinder
+set group cylinder_group type 2
 # Create another group from all the remaining atoms except for the ones in the cylinder
-group frozen subtract all cylinder
+group frozen subtract all cylinder_group
 # Set the velocity of the atoms outside the cylinder to zero
 velocity frozen set 0 0 0
 # Delete the "1" group
 unfix 1
 
-# Make cylinder group "1"
-fix 1 cylinder nve
+# Run cylinder using nve
+fix 1 cylinder_group nve
 run 5000
