@@ -1,0 +1,6 @@
+
+export OMP_NUM_THREADS=4
+
+for T in $(seq 1400 50 3000); do
+    mpirun -np 4 lmp -var T $T -in scripts/si.in
+done
