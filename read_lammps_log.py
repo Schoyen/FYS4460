@@ -8,6 +8,7 @@ def get_temp_lognames(prefix, extension=".log", dat_dir="dat"):
     file_list = list(
         filter(lambda x: x.startswith(prefix), os.listdir(dat_dir))
     )
+    file_list = list(filter(lambda x: x.endswith(extension), file_list))
 
     pattern = prefix + r"_(.+).log"
     temperature_list = [
