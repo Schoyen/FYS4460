@@ -31,3 +31,6 @@ __pycache__
 # Moltemplate output
 output_ttree
 *.data
+
+# Data files
+*.dat
