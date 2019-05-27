@@ -3,6 +3,31 @@ import numpy as np
 
 
 @numba.njit(cache=True)
+def parallel_percwalk(spanning_cluster, num_walks, num_walkers, num_systems):
+    msd = np.zeros(num_walks)
+
+    for system in range(num_systems):
+        msd += squared_displacement(spanning_cluster, num_walks, num_walkers)
+
+    return msd / num_systems
+
+
+@numba.njit(cache=True)
+def squared_displacement(spanning_cluster, num_walks, num_walkers):
+    displacements = np.zeros(num_walks)
+
+    for walker in range(num_walkers):
+        num_steps = 0
+
+        while num_steps <= 1:
+            _, _displacements, num_steps = percwalk(spanning_cluster, num_walks)
+
+        displacements += np.sum(_displacements ** 2, axis=0)
+
+    return displacements / num_walkers
+
+
+@numba.njit(cache=True)
 def percwalk(spanning_cluster, num_walks):
     """Function performing a random walk on the spanning cluster.
 
