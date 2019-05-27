@@ -103,7 +103,7 @@ def create_configurations(L):
 
 L_list = [1, 2, 3, 4, 5]
 
-p_arr = np.linspace(0, 1, 101)
+p_arr = np.linspace(0, 1, 10001)
 scd_arr = np.zeros((len(L_list), len(p_arr)))
 pp_arr = np.zeros((len(L_list), len(p_arr)))
 
