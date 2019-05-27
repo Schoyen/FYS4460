@@ -1,9 +1,17 @@
-import itertools
+import math
 
 import tqdm
 import numpy as np
 import scipy.ndimage
 import matplotlib.pyplot as plt
+import seaborn as sns
+import sympy.utilities.iterables
+
+sns.set(color_codes=True)
+
+
+def nchoosek(n, k):
+    return math.factorial(n) / (math.factorial(k) * math.factorial(n - k))
 
 
 def compute_probability_of_configuration(c_i, p, L):
@@ -20,8 +28,8 @@ def is_spanning(system):
 
     label, num_features = scipy.ndimage.measurements.label(system)
 
-    x_direction = np.any(np.intersect1d(label[:, 0], label[:, 1]) > 0)
-    y_direction = np.any(np.intersect1d(label[0], label[1]) > 0)
+    x_direction = np.any(np.intersect1d(label[:, 0], label[:, -1]) > 0)
+    y_direction = np.any(np.intersect1d(label[0], label[-1]) > 0)
 
     return x_direction or y_direction
 
@@ -33,13 +41,7 @@ def compute_condition_scd(c_i, g_i, p, L):
     scd = np.sum(c_i) / L ** 2
     prob = compute_probability_of_configuration(c_i, p, L)
 
-    num_spanning = 0
-
-    for configuration in g_i:
-        if is_spanning(configuration):
-            num_spanning += 1
-
-    return num_spanning * scd * prob
+    return len(g_i) * scd * prob
 
 
 def compute_spanning_cluster_density(c, g, p, L):
@@ -55,69 +57,79 @@ def compute_condition_pp(c_i, g_i, p, L):
     if np.sum(c_i) < L:
         return 0
 
+    prob = compute_probability_of_configuration(c_i, p, L)
+
+    return len(g_i) * prob
+
 
 def compute_percolation_probability(c, g, p, L):
-    pass
-
-
-def sort_configurations(c, g):
-    non_spanning_c = {}
-    non_spanning_g = {}
-    spanning_c = {}
-    spanning_g = {}
-
-    counter = 1
+    pp = 0
 
     for key in c:
-        non_spanning_c[counter] = []
-        non_spanning_g[counter] = []
-        spanning_c[counter] = []
-        spanning_g[counter] = []
-        any_spanning = False
-        any_non_spanning = False
+        pp += compute_condition_pp(c[key], g[key], p, L)
 
-        for configuration in g[key]:
-            if is_spanning(configuration):
-                pass
-
-        if any_spanning:
-            spanning_c[counter].append(c[key])
-        if any_non_spanning:
-            non_spanning_c[counter].append(c[key])
-
-        counter += 1
+    return pp
 
 
 def create_configurations(L):
     c = {}
-    g = {}
+    g_spanning = {}
+    g_non_spanning = {}
 
     for i in range(L ** 2 + 1):
         c[i + 1] = [1] * i + [0] * (L ** 2 - i)
-        g[i + 1] = []
+        g_spanning[i + 1] = []
+        g_non_spanning[i + 1] = []
 
-        for perm in set(itertools.permutations(c[i + 1])):
+        total = int(nchoosek(L ** 2, i))
+
+        for perm in tqdm.tqdm(
+            sympy.utilities.iterables.multiset_permutations(c[i + 1]),
+            total=total,
+        ):
             comb = []
             for j in range(L):
                 comb.append(perm[j * L : (j + 1) * L])
 
-            g[i + 1].append(np.array(comb))
+            comb = np.array(comb)
 
-    return sort_configurations(c, g)
+            if is_spanning(comb):
+                g_spanning[i + 1].append(comb)
+            else:
+                g_non_spanning[i + 1].append(comb)
+
+    return c, g_spanning, g_non_spanning
 
 
-L_list = [1, 2, 3]
+L_list = [1, 2, 3, 4, 5]
 
 p_arr = np.linspace(0, 1, 101)
 scd_arr = np.zeros((len(L_list), len(p_arr)))
+pp_arr = np.zeros((len(L_list), len(p_arr)))
 
 for i, L in enumerate(L_list):
-    c, g = create_configurations(L)
+    c, g, g_ns = create_configurations(L)
 
-    for j, p in tqdm.tqdm(enumerate(p_arr), total=len(p_arr)):
+    for j, p in enumerate(p_arr):
         scd_arr[i, j] = compute_spanning_cluster_density(c, g, p, L)
+        pp_arr[i, j] = compute_percolation_probability(c, g, p, L)
 
+    plt.figure(1)
     plt.plot(p_arr, scd_arr[i], label=fr"$L = {L}$")
+    plt.figure(2)
+    plt.plot(p_arr, pp_arr[i], label=fr"$L = {L}$")
 
+
+plt.figure(1)
 plt.legend(loc="best")
+plt.xlabel(r"$p$")
+plt.ylabel(r"$P(p, L)$")
+plt.title(r"Spanning cluster density for small systems")
+
+plt.figure(2)
+plt.legend(loc="best")
+plt.xlabel(r"$p$")
+plt.ylabel(r"$\Pi(p, L)$")
+plt.title(r"Percolation probability for small systems")
+
 plt.show()
