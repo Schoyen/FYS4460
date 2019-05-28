@@ -74,7 +74,7 @@ unfix 1
 fix 1 pore_group nvt temp ${temperature} ${temperature} 0.5
 thermo 100
 
-run 1000
+run 4000
 
 unfix 1
 # Run pore_group using NVE
