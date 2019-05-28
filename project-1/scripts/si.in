@@ -11,6 +11,7 @@ atom_modify     sort 0 0.0
 # diamond unit cell
 variable myL equal 10
 variable myscale equal 1.3
+variable bins equal 200
 
 variable a equal 5.431*${myscale}
 lattice         custom $a               &
@@ -59,8 +60,12 @@ run             1000
 reset_timestep 0
 variable time equal dt*step
 compute msd all msd
+compute myrdf all rdf ${bins}
+
+fix 2 all ave/time 100 1 100 c_myrdf[*] file dat/si_rdf_${T}.log mode vector
+
 thermo_style custom step v_time temp ke pe etotal press c_msd[4]
 
-log dat/si_${T}.log
+log dat/si_g_${T}.log
 
 run 5000
